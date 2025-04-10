@@ -1,0 +1,320 @@
+/*使用陰影搭配透明度，製作白色陰影往外擴散的感覺。*/
+.btn,
+.btn:focus {
+    position: relative;
+    min-width: 200px;
+    background-color: black;
+    border-radius: 4em;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition-duration: 0.4s;
+    padding: 10px 20px;
+}
+.btn:hover {
+    background-color: #3A3A3A;
+    color: white;
+    transition-duration: 0.1s;
+}
+.btn:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+    box-shadow: 0 0 10px 40px white;
+    border-radius: 4em;
+}
+.btn:active:after {
+    opacity: 1;
+    transition: 0s;
+    box-shadow: 0 0 0 0 white;
+}
+.btn:active {
+    top: 1px;
+}
+
+/*使用陰影搭配縮放。*/
+.btn {
+    min-width: 200px;
+    background-color: #fff;
+    border: 0;
+    border-radius: 5px;
+    border-bottom: 4px solid #d9d9d9;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0px 5px 10px #0057ab;
+    transition: all 0.3s;
+    padding: 10px 20px;
+}
+.btn:hover {
+    box-shadow: 0px 15px 25px -5px #0057ab;
+    transform: scale(1.03);
+}
+.btn:active {
+    box-shadow: 0px 4px 8px #0065c8;
+    transform: scale(0.98);
+}
+
+/*使用八個 span 製作點擊往外擴散的八個小點，作者使用 JavaScript 在 onClick 事件加入動畫，以下改使用 CSS 的 :active 偽元素完成相似功能。*/
+.btn,
+.btn:focus {
+    position: relative;
+    min-width: 200px;
+    border: 0;
+    border-radius: 0.4rem;
+    background: #FFEB3B;
+    color: #004D40;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.4);
+    transition: background 250ms, box-shadow 250ms;
+    padding: 10px 20px;
+}
+.btn:hover {
+    color: #004D40;
+    background: #FDD835;
+    box-shadow: -2px 2px 16px rgba(0, 0, 0, 0.6);
+}
+.btn:active {
+    box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.8);
+}
+.btn .text {
+    position: relative;
+    z-index: 2;
+}
+.btn .dot {
+    position: absolute;
+    z-index: 0;
+    display: block;
+    width: 200px;
+    height: 10px;
+    transform-origin: 5px 5px;
+    pointer-events: none;
+}
+.btn .dot:nth-child(1) {
+    top: 50%;
+    left: 100%;
+    transform: translate3d(-10px, -5px, 0);
+}
+.btn .dot:nth-child(2) {
+    bottom: 0;
+    left: 100%;
+    transform: translate3d(-10px, 0, 0) rotate(45deg);
+}
+.btn .dot:nth-child(3) {
+    bottom: 0;
+    left: 50%;
+    transform: translate3d(-5px, 0, 0) rotate(90deg);
+}
+.btn .dot:nth-child(4) {
+    bottom: 0;
+    left: 0;
+    transform: rotate(135deg);
+}
+.btn .dot:nth-child(5) {
+    top: 50%;
+    left: 0;
+    transform: translate3d(0, -5px, 0) rotate(180deg);
+}
+.btn .dot:nth-child(6) {
+    top: 0;
+    left: 0;
+    transform: rotate(225deg);
+}
+.btn .dot:nth-child(7) {
+    top: 0;
+    left: 50%;
+    transform: translate3d(-5px, 0, 0) rotate(270deg);
+}
+.btn .dot:nth-child(8) {
+    top: 0;
+    left: 100%;
+    transform: translate3d(-10px, 0, 0) rotate(315deg);
+}
+.btn .dot:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: #FDD835;
+    border-radius: 50%;
+    offset-path: path("M0 1c7.1 0 10.7 2 14.3 4s7.1 4 14.3 4 10.7-2 14.3-4 7.2-4 14.3-4 10.7 2 14.3 4 7.1 4 14.3 4 10.7-2 14.3-4 7.1-4 14.3-4 10.7 2 14.3 4 7.1 4 14.3 4 10.7-2 14.3-4 7.1-4 14.3-4 10.7 2 14.3 4 7.1 4 14.3 4");
+    offset-distance: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: background 250ms, offset-distance 750ms, opacity 750ms;
+}
+.btn:active .dot:before {
+    offset-distance: 0;
+    opacity: 1;
+    transition: offset-distance 0ms, opacity 0ms;
+}
+
+/*效果是點擊按鈕放掉滑鼠時才會播放動畫。以下改使用 CSS 的 :active 偽元素完成相似功能，不同之處在於點擊後馬上就會播放動畫。*/
+.btn,
+.btn:focus,
+.btn:hover {
+    display: inline-block;
+    position: relative;
+    min-width: 200px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff0081;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+    padding: 10px 20px;
+}
+.btn:before,
+.btn:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 140%;
+    height: 100%;
+    left: -20%;
+    z-index: -1000;
+    transition: all ease-in-out 0.5s;
+    background-repeat: no-repeat;
+}
+.btn:before {
+    display: none;
+    top: -75%;
+    background-image: radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, transparent 20%, #ff0081 20%, transparent 30%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, transparent 10%, #ff0081 15%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%);
+    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+}
+.btn:after {
+    display: none;
+    bottom: -75%;
+    background-image: radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, transparent 10%, #ff0081 15%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%), radial-gradient(circle, #ff0081 20%, transparent 20%);
+    background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+}
+.btn:active {
+    transform: scale(0.9);
+    background-color: #e60074;
+    box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+}
+.btn:active:before {
+    display: block;
+    animation: anim-top ease-in-out 0.75s forwards;
+}
+.btn:active:after {
+    display: block;
+    animation: anim-bottom ease-in-out 0.75s forwards;
+}
+@keyframes anim-top {
+    0% {
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+    }
+    50% {
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
+    }
+    100% {
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    }
+}
+@keyframes anim-bottom {
+    0% {
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+    }
+    50% {
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+    }
+    100% {
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    }
+}
+
+/*使用漸層背景搭配動畫。*/
+.btn {
+    min-width: 200px;
+    border: none;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #666666;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow: 0 6px 6px #06f;
+    padding: 10px 20px;
+}
+.btn:active {
+    background: #ff8888;
+    color: #ffffff;
+    box-shadow: none;
+    animation: anim 100ms;
+}
+@keyframes anim {
+    0% { background: radial-gradient(circle at center, rgba( 255, 125 , 125, 0 ) 0%, #ffffff 0%, #ffffff 100%); }
+    25% { background: radial-gradient(circle at center, rgba( 255, 125, 125, 0.3 ) 24%, #ffffff 25%, #ffffff 100%); }
+    50% { background: radial-gradient(circle at center, rgba( 255, 125, 125, 0.5 ) 49%, #ffffff 50%, #ffffff 100%); }
+    75% { background: radial-gradient(circle at center, rgba( 255, 125, 125, 0.8 ) 74%, #ffffff 75%, #ffffff 100%); }
+    100% { background: radial-gradient(circle at center, #ff8888 99%, #ffffff 100%, #ffffff 100%); color: #ffffff; }
+}
+
+/*使用 :after 偽元素搭配 padding 與 margin 製作綠色區塊，當點擊按鈕時，藉由控制 padding 與 margin 的數值實現綠色區塊由左下往右上放大的效果。*/
+.btn,
+.btn:focus {
+    position: relative;
+    min-width: 200px;
+    border: none;
+    border-radius: 4px;
+    background-color: #16a085;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition-duration: 0.4s;
+    padding: 10px 20px;
+    box-shadow: 0 5px 15px #193047;
+}
+.btn:hover {
+    background: #ffffff;
+    box-shadow: 0px 2px 10px 5px #1abc9c;
+    color: #000000;
+}
+.btn:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: #1abc9c;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+.btn:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
+}

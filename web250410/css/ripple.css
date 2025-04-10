@@ -1,0 +1,65 @@
+/*水波紋按鈕*/
+.btn,
+.btn:focus {
+    position: relative;
+    min-width: 200px;
+    border: none;
+    border-radius: 2px;
+    background-position: center;
+    background-color: #2196f3;
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.8s;
+    padding: 10px 20px;
+    box-shadow: 0 0 4px #999;
+}
+.btn:hover {
+    color: #FFFFFF;
+    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+}
+.btn:active {
+    background-color: #6eb9f7;
+    background-size: 100%;
+    transition: background 0s;
+}
+
+/*讓水波紋按鈕根據使用者點擊的位置向外擴散*/
+/*需搭配JS*/
+.btn,
+.btn:focus,
+.btn:hover {
+    position: relative;
+    min-width: 200px;
+    border: 0;
+    border-radius: 0.25rem;
+    background-color: #6200ee;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: background 400ms;
+    padding: 10px 20px;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
+.btn:hover {
+    background-color: #6e08ff;
+}
+.btn .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: anim 600ms linear;
+    background-color: rgba(255, 255, 255, 0.7);
+    user-select: none;
+    pointer-events: none;
+}
+@keyframes anim {
+    to { transform: scale(4); opacity: 0;}
+}
