@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Zen+Maru+Gothic&display=swap');
+:root{
+    --color01: #C2E6FF;
+    --color02: #859F3C;
+    --color03: #007F52;
+    --color04: #45451F;
+    --color05: #EB8F90;
+    --color06: #FFB471;
+    --color07: #B3B3B3;
+    --color08: #333333;
+    --color09: #F9A166;
+    --color10: #453B54;
+    --color11: #1E3A8A;
+    --color12: #B91C1C;
+    --color13: #F97316;
+    --color14: #16A34A;
+    --color15: #000000;
+    --color16: #FFFFFF;
+    --color17: #808080;
+    --color18: #333333;
+    --color19: #D3D3D3;
+    --color20: #F5F5F5; /*light gray*/ /*background*/
+    --color21: #FAF9F6; /*off-white*/
+    --color22: #E0F7FA; /*light cyan*/
+    --color23: #2563EB; /*blue*/
+    --color24: #1D4ED8; /*darker blue*/
+    --color25: #3B82F6; /*sky blue*/
+    --color26: #EF4444; /*red*/
+    --color27: #F59E0B; /*yellow*/
+    --color28: #10B981; /*emerald green*/
+    --color29: #34D399; /*mint green*/
+    --color30: #DBEAFE; /*light blue*/
+    --color31: #D1FAE5; /*light green*/
+    --color32: #FEE2E2; /*light orange*/
+    --color33: #FFFF00;
+}
+
+:root {
+    /* ======================== 黑色系 ======================== */
+    
+    --black             : #000000;          /* 黑色 */
+    --dimgray           : #696969;          /* 暗灰 */
+    --gray              : #808080;          /* 灰色 */
+    --darkgray          : #A9A9A9;          /* 深灰 */
+    --silver            : #C0C0C0;          /* 銀色 */
+    --lightgray         : #D3D3D3;          /* 淺灰 */
+    --gainsboro         : #DCDCDC;          /* 澄灰 */
+    --whitesmoke        : #F5F5F5;          /* 烟霧白 */
+    --white             : #FFFFFF;          /* 白色 */
+    --snow              : #FFFAFA;          /* 雪白 */
+
+    /* ======================== 紅色系 ======================== */
+    
+    --red               : #FF0000;          /* 紅色 */
+    --strongred         : #E60000;          /* 強紅 */
+    --persimmon         : #FF4D40;          /* 柿子紅 */
+    --indianred         : #CD5C5C;          /* 印度紅 */
+    --rosybrown         : #BC8F8F;          /* 玫瑰棕 */
+    --lightcoral        : #F08080;          /* 淺珊瑚紅 */
+    --firebrick         : #B22222;          /* 火磚紅 */
+    --brown             : #A52A2A;          /* 棕色 */
+    --maroon            : #800000;          /* 紅褐色 */
+    --darkred           : #8B0000;          /* 深紅 */
+    --scarlet           : #FF2400;          /* 鮮紅 */
+    --tomato            : #FF6347;          /* 番茄紅 */
+    --darksalmon        : #E9967A;          /* 深鮭紅 */
+    --coral             : #FF7F50;          /* 珊瑚色 */
+    --orangered         : #FF4500;          /* 橙紅色 */
+    --lightsalmon       : #FFA07A;          /* 淺鮭紅 */
+
+    /* ======================== 橙色系 ======================== */
+    
+    --tropicalorange    : #FF8033;          /* 熱帶橙 */
+    --camel             : #A16B47;          /* 駱駝色 */
+    --apricot           : #E69966;          /* 杏色 */
+    --coconutbrown      : #4D1F00;          /* 椰子棕 */
+    --sunorange         : #FF7300;          /* 陽光橙 */
+    --saddlebrown       : #8B4513;          /* 馬鞍棕 */
+    --chocolate         : #D2691E;          /* 巧克力色 */
+    --burntorange       : #CC5500;          /* 焦橙 */
+    --peachpuff         : #FFDAB9;          /* 桃粉色 */
+    --sandbrown         : #F4A460;          /* 沙棕色 */
+    --bronze            : #B87333;          /* 銅色 */
+    --honeyorange       : #FFB366;          /* 蜂蜜橙 */
+    --peru              : #CD853F;          /* 秘魯棕 */
+    --sepia             : #704214;          /* 深棕色 */
+    --ocher             : #CC7722;          /* 黃土色 */
+    --tangerine         : #F28500;          /* 橘色 */
+    --darkorange        : #FF8C00;          /* 深橙色 */
+    --amber             : #FFBF00;          /* 琥珀色 */
+    --goldenrod         : #DAA520;          /* 金菊色 */
+    --golden            : #FFD700;          /* 金色 */
+    --lemonchiffon      : #FFFACD;          /* 檸檬絨 */
+    --lightkhaki        : #F0E68C;          /* 淺卡其色 */
+    --palegoldenrod     : #EEE8AA;          /* 淺金菊色 */
+    --darkkhaki         : #BDB76B;          /* 深卡其色 */
+    --mimosa            : #E6D933;          /* 向日葵黃 */
+    --champagneyellow   : #FFFF99;          /* 香檳黃 */
+    --mustard           : #CCCC4D;          /* 芥末色 */
+    --moonyellow        : #FFFF4D;          /* 月亮黃 */
+    --canaryyellow      : #FFEF00;          /* 金絲雀黃 */
+    --yellow            : #FFFF00;          /* 黃色 */
+
+    /* ======================== 黃綠色系 ======================== */
+    
+    --mossgreen         : #697723;          /* 苔蘚綠 */
+    --lightlime         : #CCFF00;          /* 淺檸檬綠 */
+    --olivedrab         : #6B8E23;          /* 橄欖褐 */
+    --yellowgreen       : #9ACD32;          /* 黃綠色 */
+    --darkolivegreen    : #556B2F;          /* 深橄欖綠 */
+    --applegreen        : #8CE600;          /* 蘋果綠 */
+    --greenyellow       : #ADFF2F;          /* 綠黃 */
+    --grassgreen        : #99E64D;          /* 草綠色 */
+    --lawngreen         : #7CFC00;          /* 草坪綠 */
+    --chartreuse        : #7FFF00;          /* 明黃綠 */
+    --foliagegreen      : #73B839;          /* 葉綠色 */
+    --freshleaves       : #99FF4D;          /* 新葉綠 */
+    --brightgreen       : #66FF00;          /* 鮮亮綠 */
+    --cobaltgreen       : #66FF59;          /* 鈷綠 */
+
+    /* ======================== 綠色系 ======================== */
+    
+    --honeymoon         : #F0FFF0;          /* 蜜月白 */
+    --seagreen          : #2E8B57;          /* 海洋綠 */
+    --mediumseagreen    : #3CB371;          /* 中海洋綠 */
+    --mintcream         : #F5FFFA;          /* 薄荷奶油 */
+    --springgreen       : #00FF80;          /* 春天綠 */
+    --peacockgreen      : #00A15C;          /* 孔雀綠 */
+    --mediumspringgreen : #00FA9A;          /* 中春天綠 */
+    --mediumaquamarine  : #66CDAA;          /* 中海藍寶石 */
+    --aquamarine        : #7FFFD4;          /* 海藍寶石 */
+    --cyanblue          : #0DBF8C;          /* 青藍 */
+    --aqua              : #66FFE6;          /* 水藍 */
+    --turquoiseblue     : #33E6CC;          /* 土耳其藍 */
+    --turquoise         : #30D5C8;          /* 土耳其綠 */
+    --lightseagreen     : #20B2AA;          /* 淺海洋綠 */
+    --mediumturquoise   : #48D1CC;          /* 中土耳其綠 */
+    --lightcyan         : #E0FFFF;          /* 淺青色 */
+    --babyblue          : #89CFF0;          /* 寶寶藍 */
+    --paleTurquoise     : #AFEEEE;          /* 淺土耳其綠 */
+
+    /* ======================== 藍色系 ======================== */
+    
+    --darkslategray     : #2F4F4F;          /* 深板岩灰 */
+    --teal              : #008080;          /* 水鴨色 */
+    --darkcyan          : #008B8B;          /* 深青色 */
+    --cyan              : #00FFFF;          /* 青色 */
+    --lightblue         : #AFDFE4;          /* 淺藍色 */
+    --darkturquoise     : #00CED1;          /* 深土耳其藍 */
+    --cadetblue         : #5F9EA0;          /* 學員藍 */
+    --peacockblue       : #00808C;          /* 孔雀藍 */
+    --powderblue        : #B0E0E6;          /* 粉藍色 */
+    --lightsteelblue    : #B0C4DE;          /* 淺鋼藍 */
+    --slateblue         : #6A5ACD;          /* 板岩藍 */
+    --mediumslateblue   : #7B68EE;          /* 中板岩藍 */
+    --royalblue         : #4169E1;          /* 皇家藍 */
+    --mediumblue        : #0000CD;          /* 中藍色 */
+    --dodgerblue        : #1E90FF;          /* 道奇藍 */
+    --cornflowerblue    : #6495ED;          /* 矢車菊藍 */
+    --steelblue         : #4682B4;          /* 鋼藍 */
+    --lightskyblue      : #87CEFA;          /* 淺天藍 */
+    --deepskyblue       : #00BFFF;          /* 深天藍 */
+    --skyblue           : #87CEEB;          /* 天藍色 */
+    --lightseagreen     : #20B2AA;          /* 淺海藍 */
+
+    /* ======================== 紫色系 ======================== */
+    
+    --lavender          : #E6E6FA;          /* 薰衣草 */
+    --lightviolet       : #B497BD;          /* 淺紫色 */
+    --thistle           : #D8BFD8;          /* 蓟草花色 */
+    --orchid            : #DA70D6;          /* 蘭花紫 */
+    --violet            : #EE82EE;          /* 紫羅蘭色 */
+    --purple            : #800080;          /* 紫色 */
+    --mediumorchid      : #BA55D3;          /* 中蘭花紫 */
+    --blueviolet        : #8A2BE2;          /* 藍紫色 */
+    --darkviolet        : #9400D3;          /* 深紫羅蘭色 */
+    --indigo            : #4B0082;          /* 靛藍色 */
+    --darkorchid        : #9932CC;          /* 深蘭花紫 */
+    --fuchsia           : #FF00FF;          /* 紫紅色 */
+    --magenta           : #FF00FF;          /* 品紅 */
+    --mediumvioletred   : #C71585;          /* 中紫紅色 */
+    --purplemedium      : #B30A5D;          /* 紫色中 */
+}
+
+/* background-color */
+.bg-001{
+    background-color: #fdf5e9;
+}
+.bg-002{
+    background-color: #e2bda8;
+}
+.bg-003{
+    background-color: #e89f42;
+}
+.bg-004{
+    background-color: #c17353;
+}
+.bg-005{
+    background-color: var(--apricot);
+}
+.bg-006{
+    background-color: var(--mycolor06);
+}
+.bg-007{
+    background-color: var(--mycolor07);
+}
+.bg-008{
+    background-color: #881144
+}
+
+/* CSS Grid 佈局 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 三列等寬 */
+    grid-gap: 20px;
+}
+
+.grid-item {
+    background: #ddd;
+    padding: 20px;
+}
+
+/* 過渡效果 */
+.button {
+    background-color: #3498db;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+
+  /* 動畫 */
+@keyframes slide {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+    }
+
+.slider {
+    animation: slide 1s ease-out;
+}
+
+/* 自定義字體和排版 */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+h1 {
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
+}
+
+/* Chrome, Edge 和 Safari */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #3498db;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+
+/* 文字粗邊 */
+.fw-100{
+    font-weight: 100;
+}
+.fw-200{
+    font-weight: 200;
+}
+.fw-300{
+    font-weight: 300;
+}
+.fw-400{
+    font-weight: 400;
+}
+.fw-500{
+    font-weight: 500;
+}
+.fw-600{
+    font-weight: 600;
+}
+.fw-700{
+    font-weight: 700;
+}
+.fw-800{
+    font-weight: 800;
+}
+.fw-900{
+    font-weight: 900;
+}
+
+/* 1. table. table-rwd
+2. <td data-th="XX">
+3. <span class="table-th">xx</span> */
+
+
+
+/* 左側滑入 外層: .myrollerl 內層: .rollerl   */
+.myrollerl{
+    position: relative;
+    overflow: hidden;
+}
+.myrollerl .rollerl{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    top: 0;
+    left: -100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.myrollerl:hover .rollerl{
+    left: 0;
+    transition: left 0.7s;
+}
+
+/*上方滑入 外層: .myrollert 內層: .rollert   */
+.myrollert{
+    position: relative;
+    overflow: hidden;
+}
+.myrollert .rollert{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    top: 0;
+    top: -100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.myrollert:hover .rollert{
+    top: 0;
+    transition: top 0.7s;
+}
+
+/** 背景圖 */
+.bg-cover{
+    background-position: center center;
+    background-size: cover;
+}
+
+@media screen and (max-width: 768px) {
+    /* body{
+        background-image: linear-gradient(90deg, rgba(223, 176, 176, 0.1), rgba(6, 158, 151, 0.8));
+    } */
+    .table-rwd thead{
+        display: none;
+    }
+    .table-rwd tbody tr{
+        display: block;
+        border: 5px solid var(--color05);
+        margin-top: 15px;
+    }
+    .table-rwd tbody tr td{
+        display: block;
+        overflow: hidden;
+    }
+    .table-rwd tbody tr td::before{
+        content: attr(data-th) " : ";
+        color: var(--textcolor02);
+        font-size: 20px;
+        font-weight: 900;
+        display: block;
+        float: left;
+        width: 30%;
+        text-align: right;
+        padding-right: 15px;
+    }
+    .table-rwd tbody tr td span.table-th{
+        display: block;
+        float: left;
+        width: 70%;
+    }
+}

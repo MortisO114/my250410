@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>後台管理 - 用戶管理</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .btn-logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .btn-add-user {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body style="background-color: blanchedalmond;">
+    <div class="container">
+        <!-- 登出按鈕 -->
+        <button class="btn btn-danger btn-logout" onclick="logout()">登出</button>
+
+        <h1 class="text-center mb-4">後台管理 - 用戶管理</h1>
+
+        <!-- 新增帳號按鈕 -->
+        <button class="btn btn-success btn-add-user" onclick="addUser()">新增帳號</button>
+
+        <!-- 用戶列表 -->
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>用戶名</th>
+                    <th>電子郵件</th>
+                    <th>地區</th>
+                    <th>創建時間</th>
+                    <th>等級</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+                <!-- 動態填充用戶數據 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // 頁面加載時驗證 Uid01
+            verifyUid01();
+
+            // 獲取用戶列表
+            loadUsers();
+        });
+
+        function verifyUid01() {
+            const uid01 = getCookie("Uid01");
+            if (!uid01) {
+                Swal.fire({
+                    title: "請先登入",
+                    icon: "warning"
+                }).then(() => {
+                    location.href = "SPA1.html"; // 返回登入頁面
+                });
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "member_control_api_v1.php?action=checkuid",
+                data: JSON.stringify({ "uid01": uid01 }),
+                dataType: "json",
+                success: function (data) {
+                    if (!data.state) {
+                        Swal.fire({
+                            title: "驗證失敗",
+                            text: data.message,
+                            icon: "error"
+                        }).then(() => {
+                            setCookie("Uid01", "", -1); // 清除 Cookie
+                            setCookie("Uname01", "", -1);
+                            setCookie("UserLevel", "", -1);
+                            location.href = "SPA1.html";
+                        });
+                    } else if (data.data.Level != 50) { // 檢查用戶等級
+                        Swal.fire({
+                            title: "權限不足",
+                            text: "只有管理員 (Level 50) 可以訪問此頁面",
+                            icon: "error"
+                        }).then(() => {
+                            // 不清除 Cookie，保持用戶登入狀態
+                            location.href = "SPA1.html";
+                        });
+                    } else {
+                        // 驗證成功且用戶是 Level 50，載入用戶列表
+                        loadUsers();
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        title: "API 介接錯誤",
+                        text: "member_control_api_v1.php?action=checkuid",
+                        icon: "error"
+                    }).then(() => {
+                        setCookie("Uid01", "", -1); // 清除 Cookie
+                        setCookie("Uname01", "", -1);
+                        setCookie("UserLevel", "", -1);
+                        location.href = "SPA1.html";
+                    });
+                }
+            });
+        }
+
+        // 添加 Cookie 管理函數
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        // 獲取用戶列表
+        function loginUser() {
+            Swal.fire({
+                title: "登入",
+                html: `
+            <input type="text" id="loginUsername" class="swal2-input" placeholder="用戶名">
+            <input type="password" id="loginPassword" class="swal2-input" placeholder="密碼">
+        `,
+                showCancelButton: true,
+                confirmButtonText: "登入",
+                cancelButtonText: "取消",
+                preConfirm: () => {
+                    const username = Swal.getPopup().querySelector("#loginUsername").value;
+                    const password = Swal.getPopup().querySelector("#loginPassword").value;
+                    if (!username || !password) {
+                        Swal.showValidationMessage("請填寫所有欄位");
+                    }
+                    return { username: username, password: password };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { username, password } = result.value;
+                    $.ajax({
+                        type: "POST",
+                        url: "member_control_api_v1.php?action=login_user",
+                        data: JSON.stringify({ username: username, password: password }),
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.state) {
+                                setCookie("Uid01", data.data.Uid01, 7); // 設置有效期為 7 天
+                                setCookie("Uname01", data.data.Username, 7);
+                                setCookie("UserLevel", data.data.Level, 7);
+                                Swal.fire({
+                                    title: "登入成功",
+                                    icon: "success"
+                                }).then(() => {
+                                    const urlParams = new URLSearchParams(window.location.search);
+                                    const redirect = urlParams.get("redirect");
+                                    if (redirect === "admin") {
+                                        window.location.href = "admin.html";
+                                    } else {
+                                        updateNav();
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "登入失敗",
+                                    text: data.message,
+                                    icon: "error"
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: "API 介接錯誤",
+                                text: "member_control_api_v1.php?action=login_user",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        // 新增用戶（包含地區和等級欄位）
+        function addUser() {
+            const uid01 = getCookie("Uid01");
+            Swal.fire({
+                title: "新增帳號",
+                html: `
+            <input type="text" id="addUsername" class="swal2-input" placeholder="用戶名">
+            <input type="password" id="addPassword" class="swal2-input" placeholder="密碼">
+            <input type="email" id="addEmail" class="swal2-input" placeholder="電子郵件">
+            <input type="text" id="addRegion" class="swal2-input" placeholder="地區">
+            <select id="addLevel" class="swal2-select">
+                <option value="" disabled selected>選擇等級</option>
+                <option value="10">普通用戶 (Level 10)</option>
+                <option value="20">進階用戶 (Level 20)</option>
+                <option value="30">頂級用戶 (Level 30)</option>
+                <option value="50">管理員 (Level 50)</option>
+            </select>
+        `,
+                showCancelButton: true,
+                confirmButtonText: "新增",
+                cancelButtonText: "取消",
+                preConfirm: () => {
+                    const username = Swal.getPopup().querySelector("#addUsername").value;
+                    const password = Swal.getPopup().querySelector("#addPassword").value;
+                    const email = Swal.getPopup().querySelector("#addEmail").value;
+                    const region = Swal.getPopup().querySelector("#addRegion").value;
+                    const level = Swal.getPopup().querySelector("#addLevel").value;
+                    if (!username || !password || !email || !region || !level) {
+                        Swal.showValidationMessage("請填寫所有欄位");
+                    }
+                    return { username: username, password: password, email: email, region: region, level: level };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { username, password, email, region, level } = result.value;
+                    $.ajax({
+                        type: "POST",
+                        url: "member_control_api_v1.php?action=add_user",
+                        data: JSON.stringify({ uid01: uid01, username: username, password: password, email: email, region: region, level: level }),
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.state) {
+                                Swal.fire({
+                                    title: "新增成功",
+                                    icon: "success"
+                                }).then(() => {
+                                    loadUsers(); // 刷新列表
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "新增失敗",
+                                    text: data.message,
+                                    icon: "error"
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: "API 介接錯誤",
+                                text: "member_control_api_v1.php?action=add_user",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        // 編輯用戶（允許編輯用戶名和電子郵件）
+        function editUser(id, username, email) {
+            const uid01 = getCookie("Uid01");
+            Swal.fire({
+                title: "編輯用戶",
+                html: `
+            <input type="text" id="editUsername" class="swal2-input" value="${username}" placeholder="用戶名">
+            <input type="email" id="editEmail" class="swal2-input" value="${email}" placeholder="電子郵件">
+        `,
+                showCancelButton: true,
+                confirmButtonText: "保存",
+                cancelButtonText: "取消",
+                preConfirm: () => {
+                    const newUsername = Swal.getPopup().querySelector("#editUsername").value;
+                    const newEmail = Swal.getPopup().querySelector("#editEmail").value;
+                    if (!newUsername || !newEmail) {
+                        Swal.showValidationMessage("請填寫所有欄位");
+                    }
+                    return { username: newUsername, email: newEmail };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const { username, email } = result.value;
+                    $.ajax({
+                        type: "POST",
+                        url: "member_control_api_v1.php?action=update_user",
+                        data: JSON.stringify({ uid01: uid01, id: id, username: username, email: email }),
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.state) {
+                                Swal.fire({
+                                    title: "更新成功",
+                                    icon: "success"
+                                }).then(() => {
+                                    loadUsers(); // 刷新列表
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "更新失敗",
+                                    text: data.message,
+                                    icon: "error"
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: "API 介接錯誤",
+                                text: "member_control_api_v1.php?action=update_user",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        // 刪除用戶
+        function deleteUser(id) {
+            const uid01 = getCookie("Uid01");
+            Swal.fire({
+                title: "確定要刪除此用戶嗎？",
+                text: "此操作無法撤銷！",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "member_control_api_v1.php?action=delete",
+                        data: JSON.stringify({ uid01: uid01, id: id }),
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.state) {
+                                Swal.fire({
+                                    title: "刪除成功",
+                                    icon: "success"
+                                }).then(() => {
+                                    loadUsers(); // 刷新列表
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "刪除失敗",
+                                    text: data.message,
+                                    icon: "error"
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: "API 介接錯誤",
+                                text: "member_control_api_v1.php?action=delete",
+                                icon: "error"
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        function loadUsers() {
+            const uid01 = getCookie("Uid01");
+            if (!uid01) {
+                Swal.fire({
+                    title: "請先登入",
+                    text: "Uid01 丟失，請重新登入",
+                    icon: "warning"
+                }).then(() => {
+                    location.href = "SPA1.html";
+                });
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "member_control_api_v1.php?action=getalldata&uid01=" + encodeURIComponent(uid01),
+                dataType: "json",
+                success: function (data) {
+                    if (data.state) {
+                        const users = data.data;
+                        let html = "";
+                        const levelMap = {
+                            10: "普通用戶",
+                            20: "進階用戶",
+                            30: "頂級用戶",
+                            50: "管理員"
+                        };
+                        users.forEach(user => {
+                            const levelName = levelMap[user.Level] || "未知等級";
+                            html += `
+                        <tr>
+                            <td>${user.ID}</td>
+                            <td>${user.Username}</td>
+                            <td>${user.Email}</td>
+                            <td>${user.Region}</td>
+                            <td>${user.Created_at}</td>
+                            <td>${levelName} (Level ${user.Level})</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" onclick="editUser(${user.ID}, '${user.Username}', '${user.Email}')">編輯</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.ID})">刪除</button>
+                            </td>
+                        </tr>
+                    `;
+                        });
+                        $("#userTableBody").html(html);
+                    } else {
+                        Swal.fire({
+                            title: "獲取用戶失敗",
+                            text: data.message,
+                            icon: "error"
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        title: "API 介接錯誤",
+                        text: "member_control_api_v1.php?action=getalldata",
+                        icon: "error"
+                    });
+                }
+            });
+        }
+
+        // 登出
+        function logout() {
+            setCookie("Uid01", "", -1); // 清除 Cookie
+            setCookie("Uname01", "", -1);
+            setCookie("UserLevel", "", -1); // 清除用戶等級
+            Swal.fire({
+                title: "已登出",
+                icon: "success"
+            }).then(() => {
+                location.href = "SPA1.html";
+            });
+        }
+    </script>
+</body>
+
+</html>
